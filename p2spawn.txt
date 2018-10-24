@@ -1,0 +1,114 @@
+.org 0x861c0
+!main:
+addiu sp, sp, $ffe8
+sw ra, $14 (SP)
+lui v1, $8036
+lw v1, $1160 (V1)
+lui t2, $8041
+lw v0, $effc (T2)
+beq v0, r0, !checkspawn
+nop
+jal $2ca6d0
+nop
+beq r0, r0, !nop2spawn
+nop
+!checkspawn:
+lui t2, $8034
+lhu t2, $afbe (T2)
+andi t2, t2, $0020
+beq t2, r0, !nop2spawn
+nop
+jal $383bb0
+nop
+lui at, $4348
+sw v0, $00c8 (V1)
+jal $2a1308
+sw at, $00b8 (V1)
+jal $29f070
+or a0, v1, r0
+addiu a1, r0, $00c0
+lui a2, $1300
+jal $29edcc
+ori a2, a2, $472c
+lui t2, $8041
+sw v0, $effc (T2)
+sw v0, $0068 (V0)
+!nop2spawn:
+lw ra, $14 (SP)
+jr ra
+addiu sp, sp, $0018
+
+
+.org 0x856d0
+!main2:
+addiu sp, sp, $ffe8
+sw ra, $14 (SP)
+lui a0, $1300
+jal $277f50
+ori a0, a0, $472c
+lui t2, $8041
+lw t3, $effc (t2)
+lhu t2, $0074 (T3)
+beq t2, r0, !kill
+nop
+lw t2, $020c (t3)
+bne t2, v0, !kill
+nop
+
+
+lui at, $8033
+ori a0, at, $c604
+jal $29E694
+ori a1, at, $b10c
+sw v0, $001c (SP)
+lui t0, $8034
+lwc1 f12, $afb4 (t0)
+lwc1 f14, $afb0 (t0)
+mul.s f2, f12, f12
+mul.s f4, f14, f14
+add.s f2, f2, f4
+lui at, $3f80
+mtc1 at, f6
+c.lt.s f2, f6
+nop
+bc1t !dontcappyrotate
+nop
+jal $37a9a8
+nop
+lw a1, $001c (SP)
+sub a1, a1, v0
+lui t2, $8041
+lw t3, $effc (t2)
+sh a1, $00ca (t3)
+!dontcappyrotate:
+lui t2, $8034
+lhu t2, $afbe (T2)
+andi t2, t2, $4000
+bne t2, r0, !kill1
+nop
+lui t2, $8034
+lhu t2, $afbe (T2)
+andi t2, t2, $8000
+beq t2, r0, !endmain2
+nop
+lui at, $4268
+lui t2, $8041
+lw t3, $effc (t2)
+sw at, $00b8 (T3)
+beq r0, r0, !endmain2
+nop
+!kill1:
+lui t2, $8041
+lw a0, $effc (t2)
+sh r0, $0074 (A0)
+addiu a1, r0, $00cd
+lui a2, $1300
+jal $29edcc
+ori a2, a2, $3510
+!kill:
+lui t2, $8041
+sw r0, $effc (t2)
+!endmain2:
+lw ra, $14 (SP)
+jr ra
+addiu sp, sp, $0018
