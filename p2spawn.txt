@@ -14,7 +14,7 @@ beq r0, r0, !nop2spawn
 nop
 !checkspawn:
 lui t2, $8034
-lhu t2, $afbe (T2)
+lhu t2, $ (T2)
 andi t2, t2, $0020
 beq t2, r0, !nop2spawn
 nop
@@ -62,8 +62,8 @@ jal $29E694
 ori a1, at, $b10c
 sw v0, $001c (SP)
 lui t0, $8034
-lwc1 f12, $afb4 (t0)
-lwc1 f14, $afb0 (t0)
+lwc1 f12, $ (t0)
+lwc1 f14, $ (t0)
 mul.s f2, f12, f12
 mul.s f4, f14, f14
 add.s f2, f2, f4
@@ -82,7 +82,7 @@ lw t3, $effc (t2)
 sh a1, $00ca (t3)
 !dontcappyrotate:
 lui t2, $8034
-lhu t2, $afbe (T2)
+lhu t2, $ (T2)
 andi t2, t2, $4000
 bne t2, r0, !kill1
 nop
